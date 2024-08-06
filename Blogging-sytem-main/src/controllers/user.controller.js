@@ -32,12 +32,13 @@ export const userLogin = async (req, res) => {
         }
         const isMatch = await comparePassword(password, user.password);
         if (!isMatch) {
-            return res.status(401).json({ message: "Invalid username or password" });
+            return res.status(401).json({ message: "Invalid email or password" });
         }
+        const username = user.names;
         const token = generateToken(user);
         res.status(201).json({ 
             message:"User logged in successfully",
-            data:{ token}});
+            data:{ token, username}});
     } catch (error) {
         res.status(500).json({ 
             message: "internal server error",
